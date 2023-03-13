@@ -19,27 +19,9 @@ library(emmeans)
 setwd("/Users/martinkapun/Documents/GitHub/")
 
 ### load Data
-DATA <- read_excel("DrosoNatThermPref/data/thermal pref_qPCR results.xlsx",
-    sheet = "altogether",
-    na = "NA"
+DATA <- read_excel("DrosoNatThermPref/data/thermal pref_qPCR results_13.03.23.xlsx",
+    sheet = "altogether"
 )
-
-### revalue and convert to factors
-DATA$BioRep <- as.factor(DATA$BioRep)
-DATA$WolbType[DATA$WolbType == "cs"] <- "wMelCS"
-DATA$WolbType[DATA$WolbType == "mel"] <- "wMel"
-DATA$Tissue[DATA$Tissue == "h"] <- "head"
-DATA$Tissue[DATA$Tissue == "o"] <- "ovaries"
-DATA$LineID <- as.factor(paste(DATA$TempComp,
-    DATA$Line,
-    sep = "_"
-))
-DATA$TechRep <- as.factor(DATA$TechRep)
-DATA$TempFec <- as.factor(DATA$TempFec)
-DATA$TempComp <- as.factor(DATA$TempComp)
-DATA$WolbType <- as.factor(DATA$WolbType)
-
-DATA$median_Tp <- as.factor(DATA$median_Tp)
 
 means <- DATA %>%
     group_by(WolbType, Line, Tp_id, BioRep, Sex, Gene, median_Tp) %>%
@@ -49,18 +31,13 @@ means
 
 means.spread <- na.omit(spread(means, Gene, Mean))
 means.spread$delta <- 2^(-(means.spread$wd - means.spread$rpl))
-# means.spread <- subset(means.spread, means.spread$fecundity != 0)
+# means.spread <- subset(means.spread, !means.spread$Line %in% c("ak7", "ak9"))
+# means.spread$Line[means.spread$Line == "re1"] <- "wMel+1"
+# means.spread$Line[means.spread$Line == "re10"] <- "wMelCS+2"
 
-means.spread <- subset(means.spread, !means.spread$Line %in% c("ak7", "ak9"))
-means.spread$Line[means.spread$Line == "re1"] <- "wMel+1"
-means.spread$Line[means.spread$Line == "re10"] <- "wMelCS+2"
-
-Figure <- ggplot(means.spread, aes(x = median_Tp, y = delta)) +
-    facet_grid(. ~ Line) +
+Figure <- ggplot(means.spread, aes(x = Line, y = delta)) +
     theme_bw() +
-    geom_point() +
-    stat_summary(fun.data = mean_cl_normal) +
-    geom_smooth(method = "lm", formula = y ~ x, fill = "black", color = "black") +
+    geom_boxplot() +
     theme(axis.title.y = element_text(size = 22, angle = 90)) +
     theme(axis.title.x = element_text(size = 22, angle = 00)) +
     theme(axis.text = element_text(size = 18)) +
@@ -68,16 +45,16 @@ Figure <- ggplot(means.spread, aes(x = median_Tp, y = delta)) +
     theme(legend.title = element_text(size = 20)) +
     theme(strip.text = element_text(size = 20)) +
     ylab(expression(2^("-" ~ Delta ~ italic("Ct")))) +
-    xlab("Thermal Preference (°C)")
+    xlab("Line ID")
 Figure
 
-ggsave("DrosoNatThermPref/analyses/TpDelta.pdf",
+ggsave("DrosoNatThermPref/analyses/DeltaFull.pdf",
     Figure,
-    width = 10,
+    width = 8,
     height = 3
 )
 
-ggsave("DrosoNatThermPref/analyses/TpDelta.png",
+ggsave("DrosoNatThermPref/analyses/DeltaFull.png",
     Figure,
     width = 8,
     height = 3
