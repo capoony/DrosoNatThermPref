@@ -51,30 +51,36 @@ means.spread <- na.omit(spread(means, Gene, Mean))
 means.spread$delta <- 2^(-(means.spread$wd - means.spread$rpl))
 # means.spread <- subset(means.spread, means.spread$fecundity != 0)
 
+means.spread <- subset(means.spread, !means.spread$Line %in% c("ak7", "ak9"))
+means.spread$Line[means.spread$Line == "re1"] <- "wMel+1"
+means.spread$Line[means.spread$Line == "re10"] <- "wMelCS+2"
+
 Figure <- ggplot(means.spread, aes(x = median_Tp, y = delta)) +
-    facet_grid(Line ~ .) +
+    facet_grid(. ~ Line) +
     theme_bw() +
     geom_point() +
     stat_summary(fun.data = mean_cl_normal) +
-    geom_smooth(method = "lm", formula = y ~ x) +
+    geom_smooth(method = "lm", formula = y ~ x, fill = "black", color = "black") +
     theme(axis.title.y = element_text(size = 22, angle = 90)) +
     theme(axis.title.x = element_text(size = 22, angle = 00)) +
     theme(axis.text = element_text(size = 18)) +
     theme(legend.text = element_text(size = 20)) +
     theme(legend.title = element_text(size = 20)) +
-    theme(strip.text = element_text(size = 20))
+    theme(strip.text = element_text(size = 20)) +
+    ylab(expression(2^("-" ~ Delta ~ italic("Ct")))) +
+    xlab("Thermal Preference (°C)")
 Figure
 
 ggsave("DrosoNatThermPref/analyses/TpDelta.pdf",
     Figure,
-    width = 5,
-    height = 8
+    width = 10,
+    height = 3
 )
 
 ggsave("DrosoNatThermPref/analyses/TpDelta.png",
     Figure,
-    width = 5,
-    height = 8
+    width = 8,
+    height = 3
 )
 
 sink("DrosoNatThermPref/analyses/TpDelta.stats")
