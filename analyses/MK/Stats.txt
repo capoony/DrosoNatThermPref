@@ -26,10 +26,19 @@
 
 |                                      |      Chisq| Df| Pr(>Chisq)|
 |:-------------------------------------|----------:|--:|----------:|
-|(Intercept)                           | 21.4885535|  1|  0.0000036|
-|Wolbachia_status                      |  1.2943479|  3|  0.7304757|
-|antibiotic_treatment                  |  0.1638582|  1|  0.6856289|
-|country                               |  0.3246462|  1|  0.5688287|
-|ambient_temp                          |  0.8317665|  1|  0.3617622|
-|humidity                              | 22.3138295|  1|  0.0000023|
-|Wolbachia_status:antibiotic_treatment |  3.9435825|  1|  0.0470505|
+|(Intercept)                           | 22.9772128|  1|  0.0000016|
+|Wolbachia_status                      |  0.7115181|  2|  0.7006414|
+|antibiotic_treatment                  |  3.5863023|  1|  0.0582577|
+|country                               |  0.3256834|  1|  0.5682120|
+|ambient_temp                          |  0.8201323|  1|  0.3651415|
+|humidity                              | 22.1050498|  1|  0.0000026|
+|Wolbachia_status:antibiotic_treatment |  6.9540873|  2|  0.0308986|
+|antibiotic_treatment:country          |  0.4171907|  1|  0.5183421|
+
+#### PostHoc Test ####
+
+|contrast |Wolbachia_status |   estimate|        SE|  df|    z.ratio|   p.value|
+|:--------|:----------------|----------:|---------:|---:|----------:|---------:|
+|no - yes |Uninf            | -0.1211832| 0.3916747| Inf| -0.3093976| 0.7570191|
+|no - yes |wMel             | -0.1286976| 0.3146585| Inf| -0.4090073| 0.6825343|
+|no - yes |wMelCS           | -1.3782411| 0.5312725| Inf| -2.5942264| 0.0094804|
