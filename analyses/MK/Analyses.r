@@ -37,7 +37,6 @@ write.table(
     row.names = F
 )
 
-
 ## now plot averages
 TP.plot <- ggplot(DATA, aes(x = Wolbachia_strain, y = TempEst, col = Wolbachia_strain, fill = Wolbachia_strain)) +
     facet_grid(. ~ country, scales = "free_x", space = "free") +
