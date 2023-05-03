@@ -7,6 +7,7 @@ require(gridExtra)
 library(tidyverse)
 library(readxl)
 library(ggpubr)
+library(knitr)
 
 setwd("D:/GitHub/DrosoNatThermPref/analyses")
 
@@ -78,12 +79,25 @@ ggsave(
     width = 8,
     height = 5
 )
-
+sink("MK/stats_qPCR1.txt")
+cat("test sig. diff among Types")
+### test if sign. diff. among Types
+Run.full <- separate(Run.data, WolbStrain, c("Type", "origin", "Rep"))
 Run.data$IDRep <- paste0(Run.data$BioRep, Run.data$Sex)
-res <- glm(delta ~ WolbStrain * mean_Tp,
-    data = Run.data
+res <- glm(delta ~ Type * mean_Tp * Sex,
+    data = Run.full
 )
 Anova(res, type = 3)
+
+for (i in unique(Run.data$WolbStrain)) {
+    cat("#######", i, "#########")
+    DAT.i <- filter(Run.data, WolbStrain == as.character(i))
+    res <- lm(delta ~ mean_Tp,
+        data = DAT.i
+    )
+    print(summary(res))
+}
+sink()
 
 Stock.data <- subset(means.spread, means.spread$Run == "stock")
 

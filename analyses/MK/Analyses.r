@@ -91,6 +91,37 @@ ggsave(
     height = 6
 )
 
+## now plot by replicates
+TP.humidity <- ggplot(DATA, aes(x = humidity, y = TempEst, col = Wolbachia_strain, fill = Wolbachia_strain)) +
+    geom_jitter(show.legend = FALSE,
+        alpha=0.2) +
+    geom_smooth(
+        method = lm,
+        show.legend = FALSE
+    ) +
+    theme_bw() +
+    theme(text = element_text(size = 10)) +
+    xlab("Humidity (%)") +
+    scale_y_continuous(name = "Temperature (°C)", breaks = seq(10, 36, 1)) +
+    scale_color_manual(values = color) +
+    scale_fill_manual(values = color) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+TP.humidity
+
+ggsave(
+    "MK/TP_humidity.pdf",
+    TP.humidity,
+    width = 6,
+    height = 4
+)
+
+ggsave(
+    "MK/TP_humidity.png",
+    TP.humidity,
+    width = 6,
+    height = 4
+)
+
 sink("MK/Stats.txt")
 ### Finding the best model to fit the data
 
