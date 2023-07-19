@@ -132,3 +132,16 @@ ggsave(
     width = 8,
     height = 5
 )
+
+### Is there a difference in Wolbachia titer depending on the Wolbachia strain? In stocks.
+
+options(contrasts = c("contr.sum", "contr.poly"))
+
+Titer.stock=lmer(delta ~ WolbStrain + (1|BioRep), data=Stock.data)
+Titer.stock.null=lmer(delta ~ (1|BioRep), data=Stock.data)
+
+summary(Titer.stock)
+
+anova(Titer.stock, Titer.stock.null, type=3, test.statistic = "F")
+
+emmeans(Titer.stock, pairwise ~ WolbStrain)
