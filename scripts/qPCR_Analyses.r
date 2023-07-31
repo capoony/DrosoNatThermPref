@@ -132,3 +132,31 @@ ggsave(
     width = 8,
     height = 5
 )
+
+## make new analyses for pairwise comparsions
+sink("analyses/qPCR/qPCR_stocks.txt")
+cat("Sig. among Wolbachia types\n")
+Stock.data <- Stock.data %>%
+    separate(WolbStrain,
+        c(
+            "Wolb",
+            "country",
+            "ID"
+        ),
+        remove = FALSE
+    )
+
+res <- lmer(delta ~ Wolb + (1 | WolbStrain),
+    data = Stock.data
+)
+
+Anova(res)
+
+cat("Sig. among Drosophila strains\n")
+
+res <- lm(delta ~ WolbStrain,
+    data = Stock.data
+)
+
+pairs(emmeans(res, ~WolbStrain))
+sink()
