@@ -9,10 +9,12 @@ library(readxl)
 library(ggpubr)
 library(knitr)
 
-setwd("D:/GitHub/DrosoNatThermPref/analyses")
+setwd("D:/GitHub/DrosoNatThermPref")
+
+dir.create("analyses/qPCR/")
 
 ######## Basic Data exploration and data shaping ####
-DATA <- read_excel("../data/thermal pref_qPCR results_29.03.23_MK.xlsx",
+DATA <- read_excel("data/Strunov_DrosNatThermPref_2023_qPCR.xlsx",
     sheet = "altogether"
 )
 
@@ -67,20 +69,20 @@ qPCR.reg <- ggplot(Run.data, aes(x = mean_Tp, y = delta, color = WolbStrain, fil
 
 
 ggsave(
-    "MK/qPCR_regressions.pdf",
+    "analyses/qPCR/qPCR_regressions.pdf",
     qPCR.reg,
     width = 8,
     height = 5
 )
 
 ggsave(
-    "MK/qPCR_regressions.png",
+    "analyses/qPCR/qPCR_regressions.png",
     qPCR.reg,
     width = 8,
     height = 5
 )
-sink("MK/stats_qPCR1.txt")
-cat("test sig. diff among Types")
+sink("analyses/qPCR/stats_qPCR1.txt")
+cat("test sig. diff among Types\n")
 ### test if sign. diff. among Types
 Run.full <- separate(Run.data, WolbStrain, c("Type", "origin", "Rep"))
 Run.data$IDRep <- paste0(Run.data$BioRep, Run.data$Sex)
@@ -120,15 +122,43 @@ qPCR.bp <- ggplot(Stock.data, aes(x = WolbStrain, y = delta, color = WolbStrain,
 qPCR.bp
 
 ggsave(
-    "MK/qPCR_boxplot.pdf",
+    "analyses/qPCR/qPCR_boxplot.pdf",
     qPCR.bp,
     width = 8,
     height = 5
 )
 
 ggsave(
-    "MK/qPCR_boxplot.png",
+    "analyses/qPCR/qPCR_boxplot.png",
     qPCR.bp,
     width = 8,
     height = 5
 )
+
+## make new analyses for pairwise comparsions
+sink("analyses/qPCR/qPCR_stocks.txt")
+cat("Sig. among Wolbachia types\n")
+Stock.data <- Stock.data %>%
+    separate(WolbStrain,
+        c(
+            "Wolb",
+            "country",
+            "ID"
+        ),
+        remove = FALSE
+    )
+
+res <- lmer(delta ~ Wolb + (1 | WolbStrain),
+    data = Stock.data
+)
+
+Anova(res)
+
+cat("Sig. among Drosophila strains\n")
+
+res <- lm(delta ~ WolbStrain,
+    data = Stock.data
+)
+
+pairs(emmeans(res, ~WolbStrain))
+sink()

@@ -35,6 +35,14 @@
 |Wolbachia_status:antibiotic_treatment |  6.9540873|  2|  0.0308986|
 |antibiotic_treatment:country          |  0.4171907|  1|  0.5183421|
 
+#### Test by Wolbachia Status ####
+
+|             |    Chisq|  Df| Pr(>Chisq)|
+|:------------|--------:|---:|----------:|
+|Replicate    | 789.3033| 147|          0|
+|ambient_temp |       NA|   0|         NA|
+|humidity     |       NA|   0|         NA|
+
 #### PostHoc Test ####
 
 |contrast |Wolbachia_status |   estimate|        SE|  df|    z.ratio|   p.value|

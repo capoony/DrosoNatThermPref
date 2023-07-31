@@ -5,9 +5,11 @@ library(emmeans)
 library(knitr)
 library(car)
 
-setwd("D:/GitHub/DrosoNatThermPref/analyses")
+setwd("D:/GitHub/DrosoNatThermPref")
 
-DATA <- read_excel("../data/Tp_data_transformed_MK.xlsx")
+dir.create("analyses/Tp/")
+
+DATA <- read_excel("data/Strunov_DrosNatThermPref_2023_Tp.xlsx")
 DATA$Run <- factor(DATA$Run)
 DATA$slab_lane <- factor(DATA$slab_lane)
 DATA$replica <- factor(DATA$replica)
@@ -31,7 +33,7 @@ means <- DATA2 %>%
 
 
 write.table(
-    file = "MK/TP_means.txt",
+    file = "analyses/Tp/TP_means.txt",
     means,
     quote = F,
     row.names = F
@@ -51,14 +53,14 @@ TP.plot <- ggplot(DATA, aes(x = Wolbachia_strain, y = TempEst, col = Wolbachia_s
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 ggsave(
-    "MK/TP_plot.pdf",
+    "analyses/Tp/TP_plot.pdf",
     TP.plot,
     width = 8,
     height = 6
 )
 
 ggsave(
-    "MK/TP_plot.png",
+    "analyses/Tp/TP_plot.png",
     TP.plot,
     width = 8,
     height = 6
@@ -78,14 +80,14 @@ TP.replicas <- ggplot(DATA, aes(x = as.factor(replica), y = TempEst, col = Wolba
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 ggsave(
-    "MK/TP_replicas.pdf",
+    "analyses/Tp/TP_replicas.pdf",
     TP.replicas,
     width = 20,
     height = 6
 )
 
 ggsave(
-    "MK/TP_replicas.png",
+    "analyses/Tp/TP_replicas.png",
     TP.replicas,
     width = 20,
     height = 6
@@ -93,8 +95,10 @@ ggsave(
 
 ## now plot by replicates
 TP.humidity <- ggplot(DATA, aes(x = humidity, y = TempEst, col = Wolbachia_strain, fill = Wolbachia_strain)) +
-    geom_jitter(show.legend = FALSE,
-        alpha=0.2) +
+    geom_jitter(
+        show.legend = FALSE,
+        alpha = 0.2
+    ) +
     geom_smooth(
         method = lm,
         show.legend = FALSE
@@ -109,20 +113,20 @@ TP.humidity <- ggplot(DATA, aes(x = humidity, y = TempEst, col = Wolbachia_strai
 TP.humidity
 
 ggsave(
-    "MK/TP_humidity.pdf",
+    "analyses/Tp/TP_humidity.pdf",
     TP.humidity,
     width = 6,
     height = 4
 )
 
 ggsave(
-    "MK/TP_humidity.png",
+    "analyses/Tp/TP_humidity.png",
     TP.humidity,
     width = 6,
     height = 4
 )
 
-sink("MK/Stats.txt")
+sink("analyses/Tp/Stats.txt")
 ### Finding the best model to fit the data
 
 ## adjust contrasts to fit Type - III ANOVAs in R, see here https://www.r-bloggers.com/2011/03/anova-%E2%80%93-type-iiiiii-ss-explained/
@@ -184,14 +188,14 @@ TP <- ggplot(means, aes(x = Wolbachia_status, y = Mean, col = antibiotic_treatme
 TP
 
 ggsave(
-    "MK/TP_interaction.pdf",
+    "analyses/Tp/TP_interaction.pdf",
     TP,
     width = 8,
     height = 6
 )
 
 ggsave(
-    "MK/TP_interaction.png",
+    "analyses/Tp/TP_interaction.png",
     TP,
     width = 8,
     height = 6
@@ -221,7 +225,7 @@ RES.line <- lmer(TempEst ~ line * antibiotic_treatment + ambient_temp + humidity
     data = DATA3
 )
 
-sink("MK/Stats_reduced.txt")
+sink("analyses/Tp/Stats_reduced.txt")
 cat("#### Test by Lines ####")
 print(kable(Anova(RES.line,
     type = 3
@@ -260,14 +264,14 @@ TP.plot <- ggplot(DATA3, aes(x = Wolbachia_strain, y = TempEst, col = Wolbachia_
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 ggsave(
-    "MK/TP_plot_reduced.pdf",
+    "analyses/Tp/TP_plot_reduced.pdf",
     TP.plot,
     width = 8,
     height = 6
 )
 
 ggsave(
-    "MK/TP_plot_reduced.png",
+    "analyses/Tp/TP_plot_reduced.png",
     TP.plot,
     width = 8,
     height = 6
@@ -286,14 +290,14 @@ TP.replicas <- ggplot(DATA3, aes(x = as.factor(replica), y = TempEst, col = Wolb
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 ggsave(
-    "MK/TP_replicas_reduced.pdf",
+    "analyses/Tp/TP_replicas_reduced.pdf",
     TP.replicas,
     width = 20,
     height = 6
 )
 
 ggsave(
-    "MK/TP_replicas_reduced.png",
+    "analyses/Tp/TP_replicas_reduced.png",
     TP.replicas,
     width = 20,
     height = 6
