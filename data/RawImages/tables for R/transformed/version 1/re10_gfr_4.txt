@@ -1,0 +1,17 @@
+X	Y	id	T	genotype	slab_lane	replica	time	humidity	ambient_temp	food	rearing_Temp	Age	exp_date	TempEst
+112	894	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	18.83293418954054
+104	880	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	18.800398410333543
+174	914	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	19.10804617812129
+164	884	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	19.07061934955414
+210	882	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	19.279103189908927
+386	890	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	20.072719823061238
+386	880	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	20.075314139414516
+440	864	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	20.32359784476548
+532	876	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	20.736414619309805
+690	892	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	21.446578199650922
+1044	874	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	23.051674097082085
+1046	818	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	23.075244224185845
+1260	816	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	24.043252328673972
+1516	838	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	25.194915139947575
+1580	838	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	25.48425771676028
+2058	784	re10_gfr_4	NA	rif_treated	1	jj	18_00	58	24.7	homemade	25'C	7-10	03_08_20	27.659294395637858
